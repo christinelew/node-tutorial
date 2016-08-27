@@ -10,7 +10,7 @@ function start(route, handle) {
     route(handle, pathName, response, request);
   }
   
-  var port = 8000;
+  var port = 443;
   http.createServer(onRequest).listen(port);
   console.log('Server has started. Listening on port: ' + port + '...');
 }
