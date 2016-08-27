@@ -1,5 +1,4 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-var http = require('http');
 var https = require('https');
 var url = require('url');
 var fs = require('fs');
