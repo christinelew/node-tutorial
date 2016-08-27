@@ -5,7 +5,7 @@ var fs = require('fs');
 
 function start(route, handle) {
   function onRequest(request, response) {
-    response.writeHead(200);
+    // response.writeHead(200);
 
     var pathName = url.parse(request.url).pathname;
     console.log('Request for ' + pathName + ' received.');
