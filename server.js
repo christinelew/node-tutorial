@@ -5,7 +5,6 @@ var fs = require('fs');
 
 function start(route, handle) {
   function onRequest(request, response) {
-    // response.writeHead(200);
 
     var pathName = url.parse(request.url).pathname;
     console.log('Request for ' + pathName + ' received.');
@@ -21,8 +20,6 @@ function start(route, handle) {
   var port = 443;
 
   https.createServer(options, onRequest).listen(port);
-  
-  // http.createServer(onRequest).listen(port);
   console.log('Server has started. Listening on port: ' + port + '...');
 }
 
