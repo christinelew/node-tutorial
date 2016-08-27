@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 var credentials = {
-  clientID: "891f2134-438d-42b5-93c5-0aaeb1bcce86",
-  clientSecret: "jNeXZds7kEKAHEvnHShWohL",
+  clientID: "9afb9305-05c4-4b13-a61f-245449030853",
+  clientSecret: "h4JCQ4aeXXWN6hrETqwkAA8",
   site: 'https://login.microsoftonline.com/common',
   authorizationPath: '/oauth2/v2.0/authorize',
   tokenPath: '/oauth2/v2.0/token'
