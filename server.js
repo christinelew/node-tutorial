@@ -1,17 +1,29 @@
 // Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 var http = require('http');
+var https = require('https');
 var url = require('url');
+var fs = require('fs');
 
 function start(route, handle) {
   function onRequest(request, response) {
+    response.writeHead(200);
+
     var pathName = url.parse(request.url).pathname;
     console.log('Request for ' + pathName + ' received.');
     
     route(handle, pathName, response, request);
   }
-  
+
+  var options = {
+    key: fs.readFileSync('private-key.pem'),
+    cert: fs.readFileSync('certificate.pem')
+  };
+
   var port = 443;
-  http.createServer(onRequest).listen(port);
+
+  https.createServer(options, onRequest).listen(port);
+  
+  // http.createServer(onRequest).listen(port);
   console.log('Server has started. Listening on port: ' + port + '...');
 }
 
