@@ -13,7 +13,7 @@ CN = DayStarter
 [v3_req]
 keyUsage = keyEncipherment, dataEncipherment
 extendedKeyUsage = serverAuth
-subjectAltName = ec2-54-211-239-93.compute-1.amazonaws.com
+subjectAltName = @subject_alternate_names
 
 [subject_alternate_names]
 DNS.1 = ec2-54-211-239-93.compute-1.amazonaws.com
