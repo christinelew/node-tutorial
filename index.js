@@ -165,7 +165,7 @@ function mail(response, request) {
 
 
 function getMessageCount(parameters, callback) {
-    var userSpec = outlook.utilities.getUserSegment(parameters);
+    var userSpec = getUserSegment(parameters);
     var folderSpec = parameters.folderId === undefined ? '' : getFolderSegment() + parameters.folderId;
 
     var requestUrl = outlook.base.apiEndpoint() + userSpec + folderSpec + '/Messages?$count=true&$filter=isread%20eq%20false';
@@ -200,11 +200,19 @@ function getMessageCount(parameters, callback) {
 }
 
 var getFolderSegment = function () {
-    if (outlook.base.apiEndpoint().toLowerCase().indexOf('/api/v1.0') > 0) {
+    if (outlook.base.apiEndpoint().toLowerCase().indexOf('/api/v2.0') > 0) {
         return '/Folders/';
     }
 
     return '/MailFolders/'
+};
+
+function useMeSegment(parameters) {
+    return parameters.useMe || parameters.user === undefined || parameters.user.email === undefined || parameters.user.email.length <= 0;
+}
+
+function getUserSegment(parameters) {
+    return useMeSegment(parameters) ? '/Me' : '/Users/' + parameters.user.email;
 }
 
 function calendar(response, request) {
