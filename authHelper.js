@@ -20,7 +20,7 @@ var scopes = [ 'openid',
 function getAuthUrl() {
   var returnVal = oauth2.authCode.authorizeURL({
     redirect_uri: redirectUri,
-    scope: scopes.join(' ')
+    scope: scopes.join('+')
   });
   console.log('Generated auth url: ' + returnVal);
   return returnVal;
