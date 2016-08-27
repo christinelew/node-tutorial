@@ -8,7 +8,7 @@ var credentials = {
 }
 var oauth2 = require('simple-oauth2')(credentials)
 
-var redirectUri = 'http://localhost:8000/authorize';
+var redirectUri = 'http://ec2-54-211-239-93.compute-1.amazonaws.com/authorize';
 
 // The scopes the app requires
 var scopes = [ 'openid',
