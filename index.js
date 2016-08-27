@@ -130,7 +130,7 @@ function mail(response, request) {
       // Set the anchor mailbox to the user's SMTP address
       outlook.base.setAnchorMailbox(email);
       
-      outlook.mail.getMessages({token: token, odataParams: queryParams},
+      getMessageCount({token: token, odataParams: queryParams},
         function(error, result){
           if (error) {
             console.log('getMessages returned an error: ' + error);
@@ -139,6 +139,7 @@ function mail(response, request) {
           }
           else if (result) {
             console.log('getMessages returned ' + result.value.length + ' messages.');
+            response.write('<p>Total Number of Unread Emails ' + result.@odata.count + ' messages</p>');
             response.write('<table><tr><th>From</th><th>Subject</th><th>Received</th></tr>');
             result.value.forEach(function(message) {
               console.log('  Subject: ' + message.Subject);
@@ -151,7 +152,8 @@ function mail(response, request) {
             response.write('</table>');
             response.end();
           }
-        });
+        }); 
+        
     }
     else {
       response.writeHead(200, {'Content-Type': 'text/html'});
@@ -160,6 +162,43 @@ function mail(response, request) {
     }
   });
 }
+
+
+getMessageCount: function(parameters, callback) {
+    var userSpec = utilities.getUserSegment(parameters);
+    var folderSpec = parameters.folderId === undefined ? '' : getFolderSegment() + parameters.folderId;
+    
+    var requestUrl = outlook.base.apiEndpoint() + userSpec + folderSpec + '/Messages?$count=true&$filter=isread%20eq%20false';
+    
+    var apiOptions = {
+      url: requestUrl,
+      token: parameters.token,
+      user: parameters.user
+    };
+    
+    if (parameters.odataParams !== undefined) {
+      apiOptions['query'] = parameters.odataParams;
+    }
+    
+    outlook.base.makeApiCall(apiOptions, function(error, response) {
+      if (error) {
+        if (typeof callback === 'function') {
+          callback(error, response);
+        }
+      }
+      else if (response.statusCode !== 200) {
+        if (typeof callback === 'function') {
+          callback('REST request returned ' + response.statusCode + '; body: ' + JSON.stringify(response.body), response);
+        }
+      }
+      else {
+        if (typeof callback === 'function') {
+          callback(null, response.body);
+        }
+      }
+    });
+  },
+
 
 function calendar(response, request) {
   var token = getValueFromCookie('node-tutorial-token', request.headers.cookie);
