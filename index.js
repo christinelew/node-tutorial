@@ -138,9 +138,9 @@ function mail(response, request) {
                         response.end();
                     }
                     else if (result) {
-                        console.log('Result: ' + JSON.stringify(result));
+                        // console.log('Result: ' + JSON.stringify(result));
                         console.log('getMessages returned ' + result.value.length + ' messages.');
-                        // response.write('<p>Total Number of Unread Emails ' + result.count + ' messages</p>');
+                        response.write('<p>Total Number of Unread Emails ' + result['@odata.count'] + ' messages</p>');
                         response.write('<table><tr><th>From</th><th>Subject</th><th>Received</th></tr>');
                         result.value.forEach(function (message) {
                             console.log('  Subject: ' + message.Subject);
